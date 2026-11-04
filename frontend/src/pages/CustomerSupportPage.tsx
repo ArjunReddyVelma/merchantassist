@@ -685,7 +685,7 @@ export const CustomerSupportPage: React.FC<CustomerSupportPageProps> = ({
       {/* Public Customer Footer */}
       <footer className="border-t border-surface-200 bg-white py-3 text-center text-[11px] text-surface-700">
         <div>
-          Powered by Magicpin Web Support &bull; Human-in-the-Loop Customer Assistance
+          Powered by MerchantAssist Support &bull; Human-in-the-Loop Customer Assistance
         </div>
       </footer>
     </div>

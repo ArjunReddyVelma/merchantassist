@@ -92,7 +92,7 @@ function AppShell() {
       {/* Product Footer */}
       <footer className="border-t border-surface-200 bg-white py-4 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-surface-800 gap-2">
-          <div>Magicpin AI Agent &bull; Standalone Merchant Workspace v1.0</div>
+          <div>MerchantAssist &bull; Standalone Merchant Workspace v1.0</div>
           <div className="flex items-center gap-4">
             <button
               type="button"

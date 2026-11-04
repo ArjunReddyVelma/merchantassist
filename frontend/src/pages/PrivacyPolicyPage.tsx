@@ -27,7 +27,7 @@ export const PrivacyPolicyPage: React.FC<LegalPageProps> = ({ onBack }) => {
           <h1 className="text-xl font-bold text-surface-900 tracking-tight">Privacy Policy</h1>
         </div>
         <p className="text-xs text-surface-800">
-          Operational Data Handling & Privacy Architecture for Magicpin AI Agent Merchant Workspace
+          Operational Data Handling & Privacy Architecture for MerchantAssist Merchant Workspace
         </p>
         <p className="text-[11px] text-surface-800">Last Updated: October 2026 &bull; Version: 1.0 (Draft)</p>
       </div>
@@ -39,7 +39,7 @@ export const PrivacyPolicyPage: React.FC<LegalPageProps> = ({ onBack }) => {
           <span>Notice: Draft Operational Disclosure &bull; Legal Confirmation Pending</span>
         </div>
         <p className="text-[11px] leading-relaxed">
-          This document describes the current technical architecture and operational data flows of the Magicpin AI Agent software.
+          This document describes the current technical architecture and operational data flows of the MerchantAssist software.
           <strong> Formal legal review has not yet been completed.</strong> The specific items marked with callouts below require explicit product-owner and legal confirmation prior to commercial launch.
         </p>
       </div>

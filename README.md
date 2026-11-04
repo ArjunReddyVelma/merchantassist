@@ -1,4 +1,4 @@
-# 🤖 Magicpin AI Agent
+# 🤖 MerchantAssist
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-green?style=for-the-badge&logo=fastapi)
@@ -6,7 +6,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-A standalone **Merchant Support Copilot and Knowledge Management Workspace** built with **FastAPI**, **PostgreSQL**, and **React (TypeScript + Tailwind CSS)**.
+**MerchantAssist** is an **AI-powered merchant support and customer assistance platform** built with **FastAPI**, **PostgreSQL**, and **React (TypeScript + Tailwind CSS)**.
 
 The application enables merchants to maintain their business context and operating policies, conduct AI-assisted support conversations grounded in their active knowledge base, and safely review AI-generated customer reply drafts through an audited **Human-in-the-Loop** review queue.
 
@@ -16,7 +16,7 @@ The application enables merchants to maintain their business context and operati
 
 | Link | URL | What it is |
 |---|---|---|
-| **Magicpin web app** | [magicpin-frontend.onrender.com](https://magicpin-frontend.onrender.com) | Deployed merchant dashboard |
+| **MerchantAssist web app** | [magicpin-frontend.onrender.com](https://magicpin-frontend.onrender.com) | Deployed merchant dashboard |
 | Backend API | [magicpin-backend.onrender.com](https://magicpin-backend.onrender.com) | FastAPI backend service |
 | Backend readiness | [Check service readiness](https://magicpin-backend.onrender.com/v1/readyz) | Database/service health response |
 | Swagger API docs | [API documentation](https://magicpin-backend.onrender.com/docs) | Interactive API reference, when enabled |
@@ -595,7 +595,7 @@ A complete turnkey deployment specification is provided in [`render.yaml`](file:
 
 ## Running the Frontend and Backend Locally
 
-Follow these exact steps to run the complete Magicpin AI Agent full-stack application on your local machine.
+Follow these exact steps to run the complete MerchantAssist full-stack application on your local machine.
 
 ### 1. Clone the Repository and Check Out Branch
 ```bash

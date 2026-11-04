@@ -27,7 +27,7 @@ export const TermsOfServicePage: React.FC<LegalPageProps> = ({ onBack }) => {
           <h1 className="text-xl font-bold text-surface-900 tracking-tight">Terms of Service</h1>
         </div>
         <p className="text-xs text-surface-800">
-          Operational Agreement for the Magicpin AI Agent Merchant Workspace
+          Operational Agreement for the MerchantAssist Merchant Workspace
         </p>
         <p className="text-[11px] text-surface-800">Last Updated: October 2026 &bull; Version: 1.0 (Draft)</p>
       </div>
@@ -39,7 +39,7 @@ export const TermsOfServicePage: React.FC<LegalPageProps> = ({ onBack }) => {
           <span>Notice: Draft Operational Disclosure &bull; Legal Review Pending</span>
         </div>
         <p className="text-[11px] leading-relaxed">
-          These Terms of Service set forth the technical operational conditions of the Magicpin AI Agent software.
+          These Terms of Service set forth the technical operational conditions of the MerchantAssist software.
           <strong> Formal legal review has not yet been conducted.</strong> Clauses marked with confirmation callouts require review by qualified legal counsel to define governing jurisdiction, dispute resolution, and commercial warranties prior to production launch.
         </p>
       </div>
@@ -53,7 +53,7 @@ export const TermsOfServicePage: React.FC<LegalPageProps> = ({ onBack }) => {
             <span>1. Scope of the Service</span>
           </h2>
           <p>
-            The Magicpin AI Agent is a standalone, internal merchant copilot web application designed to assist store owners in managing business knowledge (policies, FAQs, operating rules) and querying store information using grounded artificial intelligence.
+            MerchantAssist is a standalone, internal merchant copilot web application designed to assist store owners in managing business knowledge (policies, FAQs, operating rules) and querying store information using grounded artificial intelligence.
           </p>
           <p className="text-surface-800">
             The service is provided strictly for merchant internal operational use and does not operate as an autonomous customer-facing messaging bot or financial transaction processor.

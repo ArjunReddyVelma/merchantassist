@@ -69,7 +69,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
             <Store className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-bold tracking-tight text-surface-900">
-            Magicpin AI Agent
+            MerchantAssist
           </span>
         </div>
         <h2 className="mt-4 text-center text-sm font-semibold text-surface-900">

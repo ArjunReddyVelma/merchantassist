@@ -30,7 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-semibold tracking-tight text-white text-sm">
-                  {merchant?.business_name || 'Magicpin AI Agent'}
+                  {merchant?.business_name || 'MerchantAssist'}
                 </span>
                 <span className="text-[10px] font-medium bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">
                   {merchant?.category || 'Merchant'}
