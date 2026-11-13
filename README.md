@@ -21,7 +21,7 @@ The application enables merchants to maintain their business context and operati
 | Backend readiness | [Check service readiness](https://magicpin-backend.onrender.com/v1/readyz) | Database/service health response |
 | Swagger API docs | [API documentation](https://magicpin-backend.onrender.com/docs) | Interactive API reference, when enabled |
 | ReDoc | [Alternative API documentation](https://magicpin-backend.onrender.com/redoc) | Alternative API reference, when enabled |
-| Source repository | [GitHub repository](https://github.com/ArjunReddyVelma/magicpin-ai-agent) | Source code and development history |
+| Source repository | [GitHub repository](https://github.com/ArjunReddyVelma/merchantassist) | Source code and development history |
 
 ### Deployment and feature status
 
@@ -303,7 +303,7 @@ magicpin-ai-agent/
 ## 8. AI Provider Integration & Merchant-Context Grounding
 
 ### Provider Abstraction
-The system uses an abstract interface, `LLMProvider`, defined in [`backend/app/ai/provider.py`](file:///Users/reddy/Desktop/magicpin-ai-agent-main/backend/app/ai/provider.py):
+The system uses an abstract interface, `LLMProvider`, defined in [`backend/app/ai/provider.py`](backend/app/ai/provider.py):
 - **`GroqProvider`**: Uses the Groq SDK to run high-speed inference on `llama-3.3-70b-versatile` (or `openai/gpt-oss-120b`).
 - **`MockLLMProvider`**: Provides deterministic, reproducible responses for automated tests and offline local development without requiring an API key.
 
@@ -350,7 +350,7 @@ Clients supply an `Idempotency-Key` HTTP header. If network retries resubmit the
 ## 10. Suggested Actions & Human-in-the-Loop Review Queue
 
 ### Deterministic Draft Generation
-Rather than triggering LLM function-calling on every prompt, the backend applies a deterministic heuristic ([`ChatService._is_draft_eligible`](file:///Users/reddy/Desktop/magicpin-ai-agent-main/backend/app/services/chat_service.py#L50-104)):
+Rather than triggering LLM function-calling on every prompt, the backend applies a deterministic heuristic ([`ChatService._is_draft_eligible`](backend/app/services/chat_service.py#L50-104)):
 - **Drafting Intent**: Matches intent terms such as `draft`, `reply`, `respond`, `apologize`, `how should i reply`, `what should i say`.
 - **Customer Context**: Matches operational nouns such as `customer`, `client`, `order`, `delivery`, `refund`, `complaint`, `delayed`, `cancel`.
 - **Exclusion Filters**: Ignores casual greetings ("hello", "thanks"), general questions, or provider error messages.
@@ -450,7 +450,7 @@ When running locally, interactive API documentation is available at:
 
 ## 13. Environment Variable Reference
 
-All configuration is managed using Pydantic Settings in [`backend/app/core/config.py`](file:///Users/reddy/Desktop/magicpin-ai-agent-main/backend/app/core/config.py) and loaded from `.env`:
+All configuration is managed using Pydantic Settings in [`backend/app/core/config.py`](backend/app/core/config.py) and loaded from `.env`:
 
 | Variable | Default Value | Description |
 |---|---|---|
@@ -571,7 +571,7 @@ The repository defines an automated CI workflow in [`.github/workflows/ci.yml`](
 
 ## 17. Deployment Readiness Notes
 
-A complete turnkey deployment specification is provided in [`render.yaml`](file:///Users/reddy/Desktop/magicpin-ai-agent-main/render.yaml):
+A complete turnkey deployment specification is provided in [`render.yaml`](render.yaml):
 - **Managed PostgreSQL**: PostgreSQL 16 managed database (`magicpin-postgres`).
 - **Backend Web Service**: Python runtime running pre-deploy migrations and Uvicorn. Auto-generates `SECRET_KEY` and `CSRF_SECRET`.
 - **Frontend Static Site**: Built with Vite and served with reverse-proxy rewrites routing `/v1/*` to the backend service.
@@ -599,8 +599,8 @@ Follow these exact steps to run the complete MerchantAssist full-stack applicati
 
 ### 1. Clone the Repository and Check Out Branch
 ```bash
-git clone https://github.com/ArjunReddyVelma/magicpin-ai-agent.git
-cd magicpin-ai-agent
+git clone https://github.com/ArjunReddyVelma/merchantassist.git
+cd merchantassist
 git checkout feature/frontend-core
 ```
 

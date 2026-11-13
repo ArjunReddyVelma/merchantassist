@@ -13,6 +13,9 @@ venv/
 .env.*
 !.env.example
 
+# Local authentication cookies used for manual verification
+phase5-cookies.txt
+
 # Node / Frontend
 node_modules/
 */node_modules/
