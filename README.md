@@ -205,7 +205,7 @@ Generic AI chatbots often fail in this domain because they hallucinate store pol
 ## 6. Repository Structure
 
 ```text
-magicpin-ai-agent/
+merchantassist/
 ├── backend/
 │   ├── alembic.ini                   # Alembic database migration configuration
 │   ├── requirements.txt              # Production Python dependencies
@@ -455,7 +455,7 @@ All configuration is managed using Pydantic Settings in [`backend/app/core/confi
 | Variable | Default Value | Description |
 |---|---|---|
 | `APP_ENV` | `development` | Environment mode (`development` or `production`). |
-| `APP_NAME` | `Magicpin AI Agent` | Display name of the application. |
+| `APP_NAME` | `Magicpin AI Agent` (legacy default) | Legacy backend display identifier retained for API compatibility; the user-facing application is branded MerchantAssist. |
 | `API_V1_STR` | `/v1` | URL prefix for v1 API routes. |
 | `HOST` | `0.0.0.0` | Bind host address for Uvicorn. |
 | `PORT` | `8000` | Bind port for Uvicorn. |
@@ -666,7 +666,7 @@ Start the FastAPI server using Uvicorn in your first terminal window:
 ### 8. Start the Frontend Server in a Separate Terminal
 Open a **new, separate terminal window**, navigate to the project directory, and start the Vite development server:
 ```bash
-cd /path/to/magicpin-ai-agent
+cd /path/to/merchantassist
 npm --prefix frontend run dev
 ```
 *The frontend development server will start and listen at `http://localhost:5173`.*
