@@ -23,11 +23,20 @@ The application enables merchants to maintain their business context and operati
 | ReDoc | [Alternative API documentation](https://magicpin-backend.onrender.com/redoc) | Alternative API reference, when enabled |
 | Source repository | [GitHub repository](https://github.com/ArjunReddyVelma/merchantassist) | Source code and development history |
 
-### Deployment and feature status
+### Production architecture
 
-- The deployed application is configured on Render with a React frontend, FastAPI backend, and PostgreSQL database.
-- The application focuses on core merchant knowledge management, grounded AI chat, customer support inquiry handling, and human-in-the-loop review workflows.
-- The Render blueprint currently describes a free PostgreSQL database. Free Render databases are temporary and should not be used for durable production/customer data.
+| Component | Production configuration |
+|---|---|
+| Frontend | Render Static Site serving the React application. |
+| Backend | Render Web Service running the FastAPI application. |
+| Database | Neon PostgreSQL Free, PostgreSQL 16, database `merchantassist`. |
+| Connection | Backend `DATABASE_URL` is configured securely in the Render dashboard and uses Neon's pooled endpoint with SSL required. The connection string is not stored in this repository. |
+| Migrations | Alembic migrations run during backend startup before Uvicorn starts. |
+| Deployment | GitHub branch `feature/frontend-core` is connected to automatic Render deployment for the backend and frontend. |
+| Health checks | Backend liveness: `/v1/healthz`; readiness: `/v1/readyz`. Render uses `/v1/readyz` as its health check. |
+| Rollback resource | The old Render PostgreSQL resource `magicpin-postgres` is retained temporarily. It is not the intended application database and remains only as a potential rollback resource while it is available. |
+
+The Render PostgreSQL resource remains declared in `render.yaml` but is no longer referenced by the backend's `DATABASE_URL` configuration. Retaining its declaration does not copy or back up Neon data; verify that the old database is usable before relying on it for rollback.
 
 ---
 
@@ -104,7 +113,7 @@ Generic AI chatbots often fail in this domain because they hallucinate store pol
 | **Frontend Single-Page Application** | Implemented | 85 frontend tests passing; lint and production build verified |
 | **Full-Stack Integration Audit** | Implemented | Backend and frontend quality suites passing; lint and production build verified |
 | **Legal Pages (Privacy & Terms)** | Draft Implemented | Reachable in UI; operational disclosures with pending-review notices |
-| **Live Production Deployment** | Deployed separately from this feature branch | Render frontend/backend links listed above |
+| **Live Production Deployment** | Automatically deployed from `feature/frontend-core` | Render frontend/backend links listed above |
 
 ---
 
@@ -129,7 +138,7 @@ Generic AI chatbots often fail in this domain because they hallucinate store pol
 - **Test Runner**: Node.js built-in test runner (`node --test`)
 
 ### Infrastructure & Persistence
-- **Database**: PostgreSQL 16
+- **Database**: Neon PostgreSQL Free, PostgreSQL 16 in production; local PostgreSQL may be used for development and tests.
 - **Deployment Specification**: Render Infrastructure-as-Code (`render.yaml`)
 
 ---
@@ -459,7 +468,7 @@ All configuration is managed using Pydantic Settings in [`backend/app/core/confi
 | `API_V1_STR` | `/v1` | URL prefix for v1 API routes. |
 | `HOST` | `0.0.0.0` | Bind host address for Uvicorn. |
 | `PORT` | `8000` | Bind port for Uvicorn. |
-| `DATABASE_URL` | `postgresql+psycopg://...` | Connection URI for PostgreSQL database. |
+| `DATABASE_URL` | Supplied through the environment | PostgreSQL connection value; keep it out of Git and documentation. |
 | `SECRET_KEY` | *(insecure dev string)* | Secret key used for cryptographic operations. Must be overridden in production. |
 | `CSRF_SECRET` | *(insecure dev string)* | Secret key used for HMAC CSRF tokens. Must be overridden in production. |
 | `FRONTEND_ORIGIN` | `http://localhost:5173` | Allowed CORS origin for frontend requests. |
@@ -482,7 +491,8 @@ All configuration is managed using Pydantic Settings in [`backend/app/core/confi
 
 ### PostgreSQL Requirements
 - **Version**: PostgreSQL 16 (or 14+)
-- **Database Name**: `magicpin_ai_agent`
+- **Production database**: Neon database `merchantassist`.
+- **Local development database name**: `magicpin_ai_agent` (the repository's local default).
 
 To create the database locally:
 ```bash
@@ -571,13 +581,17 @@ The repository defines an automated CI workflow in [`.github/workflows/ci.yml`](
 
 ## 17. Deployment Readiness Notes
 
-A complete turnkey deployment specification is provided in [`render.yaml`](render.yaml):
-- **Managed PostgreSQL**: PostgreSQL 16 managed database (`magicpin-postgres`).
-- **Backend Web Service**: Python runtime running pre-deploy migrations and Uvicorn. Auto-generates `SECRET_KEY` and `CSRF_SECRET`.
-- **Frontend Static Site**: Built with Vite and served with reverse-proxy rewrites routing `/v1/*` to the backend service.
+The Render service definitions and environment-variable contract are in [`render.yaml`](render.yaml):
+- **Backend Web Service**: FastAPI on Render; startup runs Alembic migrations before Uvicorn.
+- **Frontend Static Site**: React/Vite assets on Render, with `/v1/*` proxied to the backend.
+- **Production database**: Neon PostgreSQL Free, PostgreSQL 16. `DATABASE_URL` is marked `sync: false` so its value is supplied through the Render dashboard, not Git.
+- **Legacy database resource**: Render's `magicpin-postgres` definition remains temporarily for rollback and is not wired to the application. Keeping this resource block means the Blueprint continues to manage the resource; it does not create a backup of Neon or guarantee the Render database will remain available indefinitely.
+- **Automatic deployment**: Commits to `feature/frontend-core` trigger the connected backend and frontend services.
+- **Health checks**: `/v1/healthz` and `/v1/readyz`; Render uses `/v1/readyz` for backend readiness.
 
 ### Production Pre-Deployment Checklist
-- [ ] Provision managed PostgreSQL instance.
+- [ ] Confirm the dashboard-managed `DATABASE_URL` still points to Neon before approving a Blueprint sync.
+- [ ] Confirm the legacy Render database remains available if it is still needed for rollback.
 - [ ] Configure strong production random values for `SECRET_KEY` and `CSRF_SECRET`.
 - [ ] Securely provide `LLM_API_KEY` in server environment settings (do not commit to Git).
 - [ ] Ensure `APP_ENV=production`, which enforces `COOKIE_SECURE=true` and restricts CORS to `FRONTEND_ORIGIN`.
@@ -630,10 +644,7 @@ cp .env.example .env
 ```
 
 Open `.env` and verify the settings:
-- **Database**: Ensure `DATABASE_URL` matches your local PostgreSQL configuration:
-  ```env
-  DATABASE_URL=postgresql+psycopg://postgres:postgres@localhost:5432/magicpin_ai_agent
-  ```
+- **Database**: Set `DATABASE_URL` in your local `.env` to your local PostgreSQL connection value. Do not paste connection strings into source files or documentation, and do not commit `.env`.
 - **AI Provider**:
   - **Option A (Live Groq AI)**: Set your Groq API key:
     ```env

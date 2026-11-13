@@ -1,8 +1,6 @@
-# Render Blueprint Specification for Magicpin AI Agent (Educational / Free-Tier)
-# Architecture:
-# - PostgreSQL Database: Ephemeral 30-day Free PostgreSQL (max 1 GB, testing/educational)
-# - Web Service (Backend): Free FastAPI web service (single-instance) with startup Alembic migrations
-# - Static Site (Frontend): Free React SPA hosted on global CDN
+# Render Blueprint Specification for MerchantAssist production services.
+# The production database is Neon PostgreSQL; DATABASE_URL is managed in Render.
+# The legacy Render PostgreSQL resource is retained temporarily for rollback only.
 
 version: "1"
 
@@ -30,14 +28,9 @@ services:
       - key: CSRF_SECRET
         generateValue: true
       - key: DATABASE_URL
-        fromDatabase:
-          name: magicpin-postgres
-          property: connectionString
+        sync: false  # Configure the Neon connection securely in the Render dashboard.
       - key: FRONTEND_ORIGIN
-        fromService:
-          type: web
-          name: magicpin-frontend
-          property: host
+        value: "https://magicpin-frontend.onrender.com"
       - key: LLM_PROVIDER
         value: groq
       - key: LLM_MODEL
@@ -80,12 +73,8 @@ services:
         destination: /index.html
 
 databases:
-  # Ephemeral PostgreSQL Persistence (Free Tier / Educational)
-  # IMPORTANT NOTICE:
-  # - Render Free PostgreSQL instances expire 30 days after creation.
-  # - Free databases have no automated backups and are not durable storage.
-  # - Max 1 GB storage, 0.1 CPU, 256 MB RAM, max 100 concurrent connections.
-  # - Suitable strictly for educational demonstration, development, and testing.
+  # Legacy Render PostgreSQL resource retained temporarily for rollback.
+  # It is intentionally not referenced by the backend DATABASE_URL.
   - name: magicpin-postgres
     databaseName: magicpin_ai_agent
     user: magicpin
